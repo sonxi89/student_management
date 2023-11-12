@@ -67,9 +67,17 @@ export default function UploadFile() {
       >
         <p className="ant-upload-drag-icon">upload file</p>
         <p className="ant-upload-text">Click or drag file to this area to upload</p>
-        <p className="ant-upload-hint">Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files</p>
+        <p className="ant-upload-hint">
+          Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files
+        </p>
       </Dragger>
-      <Button loading={uploading} type="primary" disabled={fileList.length === 0} onClick={handleUploadFiles} style={{ marginTop: 16 }}>
+      <Button
+        loading={uploading}
+        type="primary"
+        disabled={fileList.length === 0}
+        onClick={handleUploadFiles}
+        style={{ marginTop: 16 }}
+      >
         {uploading ? 'Uploading' : 'Start Upload'}
       </Button>
     </>

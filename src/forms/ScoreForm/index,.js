@@ -5,19 +5,13 @@ import userApi from '../../api/userApi';
 
 const { Option } = Select;
 
-function StudentForm({ data, onClose }) {
+function ScoreForm({ data, onClose }) {
   const [dataStudent, setDataStudents] = useState(data);
+  console.log(dataStudent);
 
   const onFinish = (fieldsValue) => {
-    const values = {
-      ...fieldsValue,
-      student_position: fieldsValue['student_position'] === '1' ? '1' : null,
-      student_dob: fieldsValue['student_dob'].format('YYYY-MM-DD'),
-    };
-    console.log('Received values of form: ', values);
-
     userApi
-      .updateStudent(dataStudent.id, values)
+      .updateScore(dataStudent.id, fieldsValue)
       .then((res) => {
         message.success(res.message);
         onClose();
@@ -58,13 +52,14 @@ function StudentForm({ data, onClose }) {
           },
         ]}
       >
-        <Input />
+        <Input disabled />
       </Form.Item>
 
       <Form.Item
+        disabled
         label="Họ tên"
         name="student_name"
-        initialValue={dataStudent.student_name}
+        initialValue={dataStudent['Student.student_name']}
         rules={[
           {
             required: true,
@@ -72,31 +67,25 @@ function StudentForm({ data, onClose }) {
           },
         ]}
       >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        name="student_dob"
-        label="Ngày sinh"
-        rules={[
-          {
-            type: 'object',
-            required: true,
-            message: 'Please select time!',
-          },
-        ]}
-        initialValue={dayjs(dataStudent.student_dob)}
-      >
-        <DatePicker
-          style={{
-            width: '100%',
-          }}
-        />
+        <Input disabled />
       </Form.Item>
       <Form.Item
         label="Lớp"
         name="class"
-        initialValue={dataStudent.class}
+        initialValue={dataStudent['Student.class']}
+        rules={[
+          {
+            required: true,
+            message: 'Please input your password!',
+          },
+        ]}
+      >
+        <Input disabled />
+      </Form.Item>
+      <Form.Item
+        label="Năm học"
+        name="year_code"
+        initialValue={dataStudent.year_code}
         rules={[
           {
             required: true,
@@ -120,7 +109,7 @@ function StudentForm({ data, onClose }) {
         <Input />
       </Form.Item>
       <Form.Item
-        label="Ngành"
+        label="Khóa"
         name="faculty"
         initialValue={dataStudent.faculty}
         rules={[
@@ -133,20 +122,69 @@ function StudentForm({ data, onClose }) {
         <Input />
       </Form.Item>
       <Form.Item
-        name="student_position"
-        label="Chức vụ"
+        label="Điểm học phần"
+        name="course_score_hk"
+        initialValue={dataStudent.course_score_hk}
         rules={[
           {
             required: true,
-            message: 'Please select your country!',
+            message: 'Please input your password!',
           },
         ]}
-        initialValue={dataStudent.student_position}
       >
-        <Select placeholder="Please select a country">
-          <Option value="1">Cán bộ lớp</Option>
-          <Option value="0">Thành viên</Option>
-        </Select>
+        <Input />
+      </Form.Item>
+      <Form.Item
+        label="Điểm tích lũy"
+        name="course_score_tl"
+        initialValue={dataStudent.course_score_tl}
+        rules={[
+          {
+            required: true,
+            message: 'Please input your password!',
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        label="Điểm rèn luyện"
+        name="conduct_score"
+        initialValue={dataStudent.conduct_score}
+        rules={[
+          {
+            required: true,
+            message: 'Please input your password!',
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        label="Điểm dưới C+"
+        name="score_below_C_plus"
+        initialValue={dataStudent.score_d}
+        rules={[
+          {
+            required: true,
+            message: 'Please input your password!',
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        label="Điểm F"
+        name="score_fail"
+        initialValue={dataStudent.score_fail}
+        rules={[
+          {
+            required: true,
+            message: 'Please input your password!',
+          },
+        ]}
+      >
+        <Input />
       </Form.Item>
 
       <Form.Item>
@@ -159,4 +197,4 @@ function StudentForm({ data, onClose }) {
   );
 }
 
-export default StudentForm;
+export default ScoreForm;

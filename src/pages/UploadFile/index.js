@@ -9,14 +9,16 @@ const UploadFile = () => {
   const [uploading, setUploading] = useState(false);
   const handleUpload = () => {
     const formData = new FormData();
+
     fileList.forEach((file) => {
-      formData.append('files', file);
+      formData.append('files', file.originFileObj);
     });
+
     setUploading(true);
-    console.log(formData.get('file'));
+
     // You can use any AJAX library you like
     axios
-      .post('http://localhost:8080/student/upload', formData, {
+      .post('http://localhost:8080/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -44,9 +46,9 @@ const UploadFile = () => {
       return false;
     },
     accept: '.xls, .xlsx',
-    // onChange: ({ fileList }) => {
-    //   setFileList([...fileList]);
-    // },
+    onChange: ({ fileList }) => {
+      setFileList([...fileList]);
+    },
     multiple: true,
     fileList,
   };
@@ -55,7 +57,9 @@ const UploadFile = () => {
       <Dragger {...props}>
         <Button icon={<UploadOutlined />}>Select File</Button>
         <p className="ant-upload-text">Click or drag file to this area to upload</p>
-        <p className="ant-upload-hint">Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files</p>
+        <p className="ant-upload-hint">
+          Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files
+        </p>
       </Dragger>
       <Button
         size="large"

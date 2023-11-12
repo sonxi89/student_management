@@ -30,13 +30,19 @@ function InfoStudent({ data, showFormEdit, showDeleteConfirm }) {
           <DescriptionItem title="Ngày sinh" content={data.student_dob} />
         </Col>
         <Col span={24}>
-          <DescriptionItem title="Lớp" content={data.class_code} />
+          <DescriptionItem title="Lớp" content={data.class} />
         </Col>
         {data.student_position != null && (
           <Col span={24}>
-            <DescriptionItem title="Chức vụ" content={data.student_position ? 'Cán bộ lớp' : null} />
+            <DescriptionItem title="Chức vụ" content={data.student_position == 1 ? 'Cán bộ lớp' : null} />
           </Col>
         )}
+        <Col span={24}>
+          <DescriptionItem title="Ngành" content={data.majors} />
+        </Col>
+        <Col span={24}>
+          <DescriptionItem title="Khoa" content={data.faculty} />
+        </Col>
       </Row>
 
       <Space wrap style={{ marginTop: '30px' }}>

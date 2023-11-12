@@ -1,6 +1,7 @@
 import React from 'react';
-
 import { Layout, theme } from 'antd';
+import AdminInfo from '../../../components/AdminInfo';
+
 const { Header } = Layout;
 
 function AppHeader() {
@@ -11,9 +12,12 @@ function AppHeader() {
     <Header
       style={{
         padding: 0,
-        background: colorBgContainer,
+        background: '#f5f5f5',
+        marginBottom: '30px',
       }}
-    />
+    >
+      <AdminInfo />
+    </Header>
   );
 }
 

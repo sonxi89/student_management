@@ -1,14 +1,17 @@
 import Home from '../pages/Home';
-import ListAward from '../pages/ListAward';
+import ListScore from '../pages/ListScore';
 import ListStudent from '../pages/ListStudent';
 import UploadFile from '../pages/UploadFile';
-// import UploadFile from '../components/UploadFile/ExcelUploader';
+import ListAward from '../pages/ListAward';
+import Statistics from '../pages/Statistics';
 
 const publicRoutes = [
   { path: 'dashboard', component: Home },
-  { path: 'award', component: ListAward },
+  { path: 'score', component: ListScore },
   { path: 'student', component: ListStudent },
   { path: 'upload', component: UploadFile },
+  { path: 'award', component: ListAward },
+  { path: 'statistics', component: Statistics },
 ];
 
 const privateRoutes = [];

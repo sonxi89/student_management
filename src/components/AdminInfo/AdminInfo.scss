@@ -1,0 +1,15 @@
+.AdminInfo {
+    position: absolute;
+    right: 30px;
+    z-index: 999; /* Đảm bảo có z-index cao hơn */
+    cursor: pointer;
+  }
+ .profileAdmin {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+ } 
+
+ .ant-dropdown-menu {
+    width: 200px; /* Đổi giá trị này thành độ rộng mong muốn */
+  }

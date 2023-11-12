@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { Table, Tag, Button, Space, Tooltip, Modal, message, Drawer, Spin } from 'antd';
-import userApi from '../../api/userApi';
-import StudentForm from '../../forms/StudentForm';
-import InfoStudent from '../../components/InfoStudent';
-import { ExclamationCircleFilled, RedoOutlined, EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { DeleteOutlined, RedoOutlined, EditOutlined, ExclamationCircleFilled, EyeOutlined } from '@ant-design/icons';
+import { Button, Modal, Space, Table, Tooltip, message, Drawer } from 'antd';
+import DetailScore from '../../components/DetailScore';
+import ScoreForm from '../../forms/ScoreForm/index,';
 import axios from 'axios';
-const { confirm } = Modal;
-const baseURL = 'http://localhost:8080/student/';
+import React, { useEffect, useState } from 'react';
+import userApi from '../../api/userApi';
 
-const ListStudent = () => {
-  const [dataStudents, setDataStudents] = useState([]);
+const baseURL = 'http://localhost:8080/student/';
+const { confirm } = Modal;
+
+const ListScore = () => {
   const [isDeleted, setIsDeleted] = useState(false);
+  const [dataUser, setDataUser] = useState([]);
   const [openFormEdit, setOpenFormEdit] = useState(false);
-  const [openInfoStudent, setOpenInfoStudent] = useState(false);
-  const [selectedStudent, setSelectedStudent] = useState(null);
+  const [openDetailScore, setOpenDetailScore] = useState(false);
+  const [selectedScore, setSelectedScore] = useState(null);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
 
@@ -21,8 +22,22 @@ const ListStudent = () => {
     fetchRecords(1);
   }, [isDeleted, openFormEdit]);
 
-  const deleteStudent = async (itemId) => {
-    const url = baseURL + itemId + '/delete';
+  const fetchRecords = (page) => {
+    setLoading(true);
+    userApi
+      .getScore(page)
+      .then((res) => {
+        setDataUser(res.data);
+        setTotalPages(res.pagination.total);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const deleteScore = async (itemId) => {
+    const url = baseURL + 'delete-score/' + itemId;
     try {
       const response = await axios.delete(url);
       message.success(response.data);
@@ -32,21 +47,8 @@ const ListStudent = () => {
     }
   };
 
-  const fetchRecords = (page) => {
-    setLoading(true);
-    userApi
-      .getStudent(page)
-      .then((res) => {
-        setDataStudents(res.data);
-        setTotalPages(res.pagination.total);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const showDeleteConfirm = (itemId) => {
+  const showDeleteConfirm = (data) => {
+    console.log(data);
     confirm({
       title: 'Are you sure delete this task?',
       icon: <ExclamationCircleFilled />,
@@ -55,9 +57,9 @@ const ListStudent = () => {
       okType: 'danger',
       cancelText: 'No',
       onOk() {
-        deleteStudent(itemId);
+        deleteScore(data.id);
         setOpenFormEdit(false);
-        setOpenInfoStudent(false);
+        setOpenDetailScore(false);
       },
       onCancel() {
         console.log('Cancel');
@@ -67,18 +69,18 @@ const ListStudent = () => {
 
   const onClose = () => {
     setOpenFormEdit(false);
-    setOpenInfoStudent(false);
+    setOpenDetailScore(false);
   };
 
-  const showStudentDetail = (data, action) => {
-    setSelectedStudent(data);
+  const showScoreDetail = (data, action) => {
+    setSelectedScore(data);
 
     if (action === 'view') {
-      setOpenInfoStudent(true);
+      setOpenDetailScore(true);
       setOpenFormEdit(false);
     } else if (action === 'edit') {
       setOpenFormEdit(true);
-      setOpenInfoStudent(false);
+      setOpenDetailScore(false);
     }
   };
 
@@ -89,46 +91,54 @@ const ListStudent = () => {
     },
     {
       title: 'Họ Tên',
-      dataIndex: 'student_name',
+      dataIndex: 'Student.student_name',
     },
     {
       title: 'Ngày sinh',
-      dataIndex: 'student_dob',
+      dataIndex: 'Student.student_dob',
     },
     {
       title: 'Lớp',
-      dataIndex: 'class',
+      dataIndex: 'Student.class',
     },
     {
       title: 'Ngành',
-      dataIndex: 'majors',
+      dataIndex: 'Student.majors',
     },
     {
       title: 'Khoa',
-      dataIndex: 'faculty',
+      dataIndex: 'Student.faculty',
     },
     {
-      title: 'Chức vụ',
-      dataIndex: 'student_position',
-      render: (value) => (value == 1 ? <Tag color="green">Cán bộ lớp</Tag> : null),
+      title: 'Năm học',
+      dataIndex: 'year_code',
+    },
+    {
+      title: 'Điểm học phần',
+      dataIndex: 'course_score_hk',
+    },
+    {
+      title: 'Điểm rèn luyện',
+      dataIndex: 'conduct_score',
     },
     {
       title: '',
       render: (record) => (
         <Space wrap>
           <Tooltip color="#2db7f5" placement="top" title="Xem">
-            <Button size="small" icon={<EyeOutlined />} onClick={() => showStudentDetail(record, 'view')} />
+            <Button size="small" icon={<EyeOutlined />} onClick={() => showScoreDetail(record, 'view')} />
           </Tooltip>
           <Tooltip color="#87d068" placement="top" title="Sửa">
-            <Button size="small" icon={<EditOutlined />} onClick={() => showStudentDetail(record, 'edit')} />
+            <Button size="small" icon={<EditOutlined />} onClick={() => showScoreDetail(record, 'edit')} />
           </Tooltip>
           <Tooltip color="#f50" placement="top" title="Xóa">
-            <Button size="small" icon={<DeleteOutlined />} onClick={() => showDeleteConfirm(record.id)} />
+            <Button size="small" icon={<DeleteOutlined />} onClick={() => showDeleteConfirm(record)} />
           </Tooltip>
         </Space>
       ),
     },
   ];
+
   return (
     <>
       <div
@@ -146,7 +156,7 @@ const ListStudent = () => {
       <Table
         columns={columns}
         loading={loading}
-        dataSource={dataStudents}
+        dataSource={dataUser}
         rowKey="id"
         pagination={{
           pageSize: 10,
@@ -157,18 +167,19 @@ const ListStudent = () => {
         }}
       />
       <Drawer
-        title={openInfoStudent ? 'Student Profile' : 'Student Edit'}
+        width={450}
+        title={openDetailScore ? 'Score Detail' : 'Score Edit'}
         placement="left"
         onClose={onClose}
-        open={openInfoStudent || openFormEdit}
+        open={openDetailScore || openFormEdit}
       >
-        {openInfoStudent && (
-          <InfoStudent data={selectedStudent} showFormEdit={showStudentDetail} showDeleteConfirm={showDeleteConfirm} />
+        {openDetailScore && (
+          <DetailScore data={selectedScore} showFormEdit={showScoreDetail} showDeleteConfirm={showDeleteConfirm} />
         )}
-        {openFormEdit && <StudentForm data={selectedStudent} onClose={onClose} />}
+        {openFormEdit && <ScoreForm data={selectedScore} onClose={onClose} />}
       </Drawer>
     </>
   );
 };
 
-export default ListStudent;
+export default ListScore;
