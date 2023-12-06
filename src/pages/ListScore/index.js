@@ -50,12 +50,12 @@ const ListScore = () => {
   const showDeleteConfirm = (data) => {
     console.log(data);
     confirm({
-      title: 'Are you sure delete this task?',
+      title: 'Bạn có muốn xóa bản ghi này?',
       icon: <ExclamationCircleFilled />,
       content: 'Bạn chắc chắn muốn xóa ?',
-      okText: 'Yes',
+      okText: 'Đồng ý',
       okType: 'danger',
-      cancelText: 'No',
+      cancelText: 'Hủy',
       onOk() {
         deleteScore(data.id);
         setOpenFormEdit(false);
@@ -99,15 +99,15 @@ const ListScore = () => {
     },
     {
       title: 'Lớp',
-      dataIndex: 'Student.class',
+      dataIndex: 'Student.class_name',
     },
     {
       title: 'Ngành',
-      dataIndex: 'Student.majors',
+      dataIndex: 'Student.majors_name',
     },
     {
       title: 'Khoa',
-      dataIndex: 'Student.faculty',
+      dataIndex: 'Student.faculty_name',
     },
     {
       title: 'Năm học',

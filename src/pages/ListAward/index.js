@@ -58,11 +58,11 @@ const ListAward = () => {
     },
     {
       title: 'Họ Tên',
-      dataIndex: 'Student.student_name',
+      dataIndex: 'student_name',
     },
     {
       title: 'Lớp',
-      dataIndex: 'Student.class',
+      dataIndex: 'class_name',
     },
     {
       title: 'Năm học',
@@ -70,16 +70,16 @@ const ListAward = () => {
     },
     {
       title: 'Chức vụ',
-      dataIndex: 'Student.student_position',
-      render: (value) => (value == 1 ? <Tag color="green">Cán bộ lớp</Tag> : null),
+      dataIndex: 'student_position',
+      render: (value) => (value === 1 ? <Tag color="green">Cán bộ lớp</Tag> : null),
     },
     {
       title: 'Ngành',
-      dataIndex: 'Student.majors',
+      dataIndex: 'majors_name',
     },
     {
       title: 'Khoa',
-      dataIndex: 'Student.faculty',
+      dataIndex: 'faculty_name',
     },
     {
       title: 'Khen thưởng',
@@ -88,15 +88,15 @@ const ListAward = () => {
         const tagColors = {
           SVG: '#2db7f5',
           SVXS: '#87d068',
-          SVCĐG: '#108ee9',
-          'SVXS, SVCĐG': '#f17950',
+          SVCDG: '#f17950',
+          'SVXS, SVCDG': '#f18f8f',
         };
         const color = tagColors[value];
         return <Tag color={color}>{value}</Tag>;
       },
     },
   ];
-
+  console.log(dataAward);
   return (
     <>
       <div
@@ -110,7 +110,7 @@ const ListAward = () => {
         <div>
           <Button icon={<RedoOutlined />}>Làm mới</Button>
           <Button
-            style={{ marginLeft: '10px' }}
+            style={{ marginLeft: '10px', backgroundColor: '#12bb7b' }}
             type="primary"
             icon={<DownloadOutlined />}
             onClick={() => {
@@ -131,15 +131,6 @@ const ListAward = () => {
           justifyContent: 'space-between',
         }}
       >
-        <Form.Item style={{ marginRight: '20px' }} name="class" label="Lớp">
-          <Select defaultValue="">
-            <Option value="">-- Lớp --</Option>
-            <Option value="K64">K64</Option>
-            <Option value="K63">K63</Option>
-            <Option value="K62">K62</Option>
-          </Select>
-        </Form.Item>
-
         <Form.Item style={{ marginRight: '20px' }} name="year" label="Năm học">
           <Select defaultValue="">
             <Option value="">-- Năm học --</Option>
@@ -156,8 +147,8 @@ const ListAward = () => {
             <Option value="">-- Khen thưởng --</Option>
             <Option value="SVG">Sinh viên giỏi</Option>
             <Option value="SVXS">Sinh viên xuất sắc</Option>
-            <Option value="SVCĐG">Sinh viên có đóng góp</Option>
-            <Option value="SVG&SVCĐG">Sinh viên có đóng góp, XS</Option>
+            <Option value="SVCDG">Sinh viên có đóng góp</Option>
+            <Option value="SVXS, SVCDG">SV XS và CĐG</Option>
           </Select>
         </Form.Item>
 
@@ -196,7 +187,7 @@ const ListAward = () => {
         columns={columns}
         loading={loading}
         dataSource={dataAward}
-        rowKey="id"
+        rowKey={(record) => record.id}
         pagination={{
           pageSize: 10,
           total: totalPages,

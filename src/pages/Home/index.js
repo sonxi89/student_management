@@ -1,8 +1,29 @@
 import Chart from '../../chart/Chart';
 import SummaryCard from './components/SummaryCard';
-import CardInfo from './components/CardInfo';
+import React, { useEffect, useState } from 'react';
+import userApi from '../../api/userApi';
 
-function Home() {
+const Home = () => {
+  const [dataReport, setDataReport] = useState();
+  const [dataReportDiagram, setDataReportDiagram] = useState();
+
+  useEffect(() => {
+    userApi
+      .getReport()
+      .then((res) => {
+        setDataReport(res);
+        setDataReportDiagram([
+          { name: 'SVG', value: res.svg },
+          { name: 'SVXS', value: res.svxs },
+          { name: 'SVCĐG', value: res.svcdg },
+          { name: 'SVXS & SVCĐG', value: res.svxsvcdg },
+        ]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <>
       <div
@@ -18,31 +39,35 @@ function Home() {
         <SummaryCard
           title="Sinh viên giỏi"
           tagContent="Sinh viên giỏi"
-          tagColor="#dd8d74"
+          tagColor="#87d174"
+          data={dataReport?.svg}
           icon="/img/education_1.png"
         />
         <SummaryCard
           title="Sinh viên xuất sắc"
-          tagContent="Sinh viên giỏi"
-          tagColor="#dd8d74"
+          tagContent="Sinh viên xuất sắc"
+          tagColor="#87d174"
+          data={dataReport?.svxs}
           icon="/img/education_2.png"
         />
         <SummaryCard
           title="Sinh viên có đóng góp"
-          tagContent="Sinh viên giỏi"
-          tagColor="#dd8d74"
+          tagContent="Sinh viên có đóng góp"
+          tagColor="#87d174"
+          data={dataReport?.svcdg}
           icon="/img/education_3.png"
         />
         <SummaryCard
           title="Sinh XS và có ĐG"
-          tagContent="Sinh viên giỏi"
-          tagColor="#dd8d74"
+          tagContent="Sinh viên XS và CĐG"
+          tagColor="#87d174"
+          data={dataReport?.svxsvcdg}
           icon="/img/education_4.png"
         />
       </div>
-      <Chart />
+      <Chart data1={dataReportDiagram} />
     </>
   );
-}
+};
 
 export default Home;

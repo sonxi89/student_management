@@ -1,7 +1,7 @@
 import { Tag, Divider, Row, Col, Spin, Tooltip } from 'antd';
 import './SummaryCard.scss';
 
-export default function SummaryCard({ title, tagContent, tagColor, icon, isLoading = false }) {
+export default function SummaryCard({ title, tagContent, tagColor, icon, data, isLoading = false }) {
   return (
     <Col className="gutter-row">
       <div className="whiteBox shadow" style={{ color: '#595959', fontSize: 13, minHeight: '106px', height: '100%' }}>
@@ -50,7 +50,7 @@ export default function SummaryCard({ title, tagContent, tagColor, icon, isLoadi
                       textOverflow: 'ellipsis',
                     }}
                   >
-                    130000
+                    {data}
                   </Tag>
                 </Tooltip>
               )}

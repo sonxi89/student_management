@@ -71,8 +71,8 @@ function ScoreForm({ data, onClose }) {
       </Form.Item>
       <Form.Item
         label="Lớp"
-        name="class"
-        initialValue={dataStudent['Student.class']}
+        name="class_name"
+        initialValue={dataStudent['Student.class_name']}
         rules={[
           {
             required: true,
@@ -97,8 +97,8 @@ function ScoreForm({ data, onClose }) {
       </Form.Item>
       <Form.Item
         label="Ngành"
-        name="majors"
-        initialValue={dataStudent.majors}
+        name="majors_name"
+        initialValue={dataStudent['Student.majors_name']}
         rules={[
           {
             required: true,
@@ -110,8 +110,8 @@ function ScoreForm({ data, onClose }) {
       </Form.Item>
       <Form.Item
         label="Khóa"
-        name="faculty"
-        initialValue={dataStudent.faculty}
+        name="faculty_name"
+        initialValue={dataStudent['Student.faculty_name']}
         rules={[
           {
             required: true,
@@ -163,7 +163,7 @@ function ScoreForm({ data, onClose }) {
       <Form.Item
         label="Điểm dưới C+"
         name="score_below_C_plus"
-        initialValue={dataStudent.score_d}
+        initialValue={dataStudent.score_below_C_plus}
         rules={[
           {
             required: true,
@@ -189,9 +189,9 @@ function ScoreForm({ data, onClose }) {
 
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          Save
+          Lưu
         </Button>
-        <Button onClick={() => onClose()}>Cancel</Button>
+        <Button onClick={() => onClose()}>Hủy</Button>
       </Form.Item>
     </Form>
   );

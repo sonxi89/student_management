@@ -30,7 +30,7 @@ function DetailScore({ data, showFormEdit, showDeleteConfirm }) {
           <DescriptionItem title="Ngày sinh" content={data['Student.student_dob']} />
         </Col>
         <Col span={24}>
-          <DescriptionItem title="Lớp" content={data['Student.class']} />
+          <DescriptionItem title="Lớp" content={data['Student.class_name']} />
         </Col>
         {data.student_position != null && (
           <Col span={24}>
@@ -47,10 +47,10 @@ function DetailScore({ data, showFormEdit, showDeleteConfirm }) {
           <DescriptionItem title="Điểm rèn luyện" content={data.conduct_score} />
         </Col>
         <Col span={24}>
-          <DescriptionItem title="Ngành" content={data['Student.majors']} />
+          <DescriptionItem title="Ngành" content={data['Student.majors_name']} />
         </Col>
         <Col span={24}>
-          <DescriptionItem title="Khoa" content={data['Student.faculty']} />
+          <DescriptionItem title="Khoa" content={data['Student.faculty_name']} />
         </Col>
         <Col span={24}>
           <DescriptionItem title="Điểm dưới C+" content={data.score_below_C_plus} />

@@ -30,7 +30,7 @@ function InfoStudent({ data, showFormEdit, showDeleteConfirm }) {
           <DescriptionItem title="Ngày sinh" content={data.student_dob} />
         </Col>
         <Col span={24}>
-          <DescriptionItem title="Lớp" content={data.class} />
+          <DescriptionItem title="Lớp" content={data.class_name} />
         </Col>
         {data.student_position != null && (
           <Col span={24}>
@@ -38,10 +38,10 @@ function InfoStudent({ data, showFormEdit, showDeleteConfirm }) {
           </Col>
         )}
         <Col span={24}>
-          <DescriptionItem title="Ngành" content={data.majors} />
+          <DescriptionItem title="Ngành" content={data.majors_name} />
         </Col>
         <Col span={24}>
-          <DescriptionItem title="Khoa" content={data.faculty} />
+          <DescriptionItem title="Khoa" content={data.faculty_name} />
         </Col>
       </Row>
 

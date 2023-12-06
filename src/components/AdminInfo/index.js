@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dropdown, Avatar } from 'antd';
-import { LogoutOutlined, UserOutlined } from '@ant-design/icons';
+import { LogoutOutlined, UserOutlined, SettingOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
 import './AdminInfo.scss';
@@ -11,6 +11,9 @@ function AdminInfo() {
   const logout = () => {
     localStorage.removeItem('accessToken');
     navigate('/');
+  };
+  const redirectToAdminProfile = () => {
+    navigate('/home/admin');
   };
 
   const items = [
@@ -27,13 +30,20 @@ function AdminInfo() {
           <p>Admin</p>
         </div>
       ),
+      onClick: () => {
+        redirectToAdminProfile();
+      },
     },
     {
       type: 'divider',
     },
     {
       key: '2',
-      label: 'Đổi mật khẩu',
+      label: 'Xem hồ sơ',
+      icon: <SettingOutlined />,
+      onClick: () => {
+        redirectToAdminProfile();
+      },
     },
     {
       type: 'divider',

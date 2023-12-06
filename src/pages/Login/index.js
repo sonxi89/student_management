@@ -47,7 +47,7 @@ function Login() {
           />
           <div className="space50"></div>
         </Col>
-        <Title level={1}>Sign in</Title>
+        <Title level={1}>Đăng nhập</Title>
 
         <Divider />
         <div className="site-layout-content">

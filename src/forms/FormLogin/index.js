@@ -15,38 +15,28 @@ const FormLogin = () => (
       rules={[
         {
           required: true,
-          message: 'Please input your Email!',
+          message: 'Hãy nhập username',
         },
       ]}
     >
-      <Input
-        prefix={<UserOutlined className="site-form-item-icon" />}
-        placeholder="admin@demo.com"
-        type="text"
-        autoComplete="text"
-        size="large"
-      />
+      <Input prefix={<UserOutlined className="site-form-item-icon" />} type="text" autoComplete="text" size="large" />
     </Form.Item>
     <Form.Item
       name="password"
       rules={[
         {
           required: true,
-          message: 'Please input your Password!',
+          message: 'Hãy nhập password!',
         },
       ]}
     >
-      <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} placeholder="admin123" size="large" />
+      <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} size="large" />
     </Form.Item>
     <Form.Item>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <Form.Item name="remember" valuePropName="checked" noStyle>
           <Checkbox>Remember me</Checkbox>
         </Form.Item>
-
-        <a style={{ color: '#1b98f5' }} href="">
-          Forgot password
-        </a>
       </div>
     </Form.Item>
   </>

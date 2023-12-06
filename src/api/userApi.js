@@ -25,6 +25,14 @@ const userApi = {
     const url = `student/update-score/${paramId}`;
     return axiosClient.put(url, body);
   },
+  getReport() {
+    const url = 'student/report';
+    return axiosClient.get(url);
+  },
+  getStatistics(params) {
+    const url = 'student/statistics';
+    return axiosClient.get(url, { params: params });
+  },
 };
 
 export default userApi;

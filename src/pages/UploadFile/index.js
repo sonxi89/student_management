@@ -25,10 +25,10 @@ const UploadFile = () => {
       })
       .then(() => {
         setFileList([]);
-        message.success('upload successfully.');
+        message.success('Nhập dữ liệu thành công!');
       })
       .catch(() => {
-        message.error('upload failed.');
+        message.error('Đã có lỗi');
       })
       .finally(() => {
         setUploading(false);
@@ -55,11 +55,9 @@ const UploadFile = () => {
   return (
     <>
       <Dragger {...props}>
-        <Button icon={<UploadOutlined />}>Select File</Button>
-        <p className="ant-upload-text">Click or drag file to this area to upload</p>
-        <p className="ant-upload-hint">
-          Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files
-        </p>
+        <Button icon={<UploadOutlined />}>Chọn file</Button>
+        <p className="ant-upload-text">Nhấp hoặc kéo tệp vào khu vực này để tải lên</p>
+        <p className="ant-upload-hint">Hỗ trợ tải lên một file hoặc hàng loạt</p>
       </Dragger>
       <Button
         size="large"
@@ -71,7 +69,7 @@ const UploadFile = () => {
           marginTop: 16,
         }}
       >
-        {uploading ? 'Uploading' : 'Import Data'}
+        {uploading ? 'Uploading' : 'Nhập dữ liệu'}
       </Button>
     </>
   );

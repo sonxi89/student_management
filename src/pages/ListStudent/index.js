@@ -48,12 +48,12 @@ const ListStudent = () => {
 
   const showDeleteConfirm = (itemId) => {
     confirm({
-      title: 'Are you sure delete this task?',
+      title: 'Bạn có muốn xóa sinh viên này?',
       icon: <ExclamationCircleFilled />,
       content: 'Bạn chắc chắn muốn xóa ?',
-      okText: 'Yes',
+      okText: 'Đồng ý',
       okType: 'danger',
-      cancelText: 'No',
+      cancelText: 'Hủy',
       onOk() {
         deleteStudent(itemId);
         setOpenFormEdit(false);
@@ -97,15 +97,15 @@ const ListStudent = () => {
     },
     {
       title: 'Lớp',
-      dataIndex: 'class',
+      dataIndex: 'class_name',
     },
     {
       title: 'Ngành',
-      dataIndex: 'majors',
+      dataIndex: 'majors_name',
     },
     {
       title: 'Khoa',
-      dataIndex: 'faculty',
+      dataIndex: 'faculty_name',
     },
     {
       title: 'Chức vụ',
@@ -138,7 +138,7 @@ const ListStudent = () => {
           alignItems: 'center',
         }}
       >
-        <h2>Danh sách điểm</h2>
+        <h2>Danh sách sinh viên</h2>
         <div>
           <Button icon={<RedoOutlined />}>Làm mới</Button>
         </div>

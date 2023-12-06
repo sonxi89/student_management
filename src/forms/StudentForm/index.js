@@ -95,8 +95,8 @@ function StudentForm({ data, onClose }) {
       </Form.Item>
       <Form.Item
         label="Lớp"
-        name="class"
-        initialValue={dataStudent.class}
+        name="class_name"
+        initialValue={dataStudent.class_name}
         rules={[
           {
             required: true,
@@ -108,8 +108,8 @@ function StudentForm({ data, onClose }) {
       </Form.Item>
       <Form.Item
         label="Ngành"
-        name="majors"
-        initialValue={dataStudent.majors}
+        name="majors_name"
+        initialValue={dataStudent.majors_name}
         rules={[
           {
             required: true,
@@ -120,9 +120,9 @@ function StudentForm({ data, onClose }) {
         <Input />
       </Form.Item>
       <Form.Item
-        label="Ngành"
-        name="faculty"
-        initialValue={dataStudent.faculty}
+        label="Khoa"
+        name="faculty_name"
+        initialValue={dataStudent.faculty_name}
         rules={[
           {
             required: true,
@@ -151,9 +151,9 @@ function StudentForm({ data, onClose }) {
 
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          Save
+          Lưu
         </Button>
-        <Button onClick={() => onClose()}>Cancel</Button>
+        <Button onClick={() => onClose()}>Hủy</Button>
       </Form.Item>
     </Form>
   );

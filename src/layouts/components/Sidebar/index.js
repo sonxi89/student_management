@@ -5,22 +5,22 @@ import './AppSidebar.scss';
 
 import {
   FileTextOutlined,
-  FileSyncOutlined,
   DashboardOutlined,
   TeamOutlined,
   UserOutlined,
-  CreditCardOutlined,
-  UserAddOutlined,
+  TrophyOutlined,
+  CalculatorOutlined,
+  FileExcelOutlined,
 } from '@ant-design/icons';
 
 const SIDEBAR_MENU = [
   { path: '/home/dashboard', icon: <DashboardOutlined />, title: 'Tổng Quan' },
-  { path: '/home/score', icon: <UserAddOutlined />, title: 'Điểm' },
+  { path: '/home/score', icon: <CalculatorOutlined />, title: 'Quản trị điểm' },
   { path: '/home/upload', icon: <FileTextOutlined />, title: 'Nhập Dữ Liệu' },
-  { path: '/home/award', icon: <FileSyncOutlined />, title: 'Khen thưởng' },
-  { path: '/home/student', icon: <UserOutlined />, title: 'Sinh Viên' },
-  { path: '/home/statistics', icon: <UserOutlined />, title: 'Thống Kê' },
-  { path: '/home/admin', icon: <TeamOutlined />, title: 'Admin' },
+  { path: '/home/award', icon: <TrophyOutlined />, title: 'Quản trị khen thưởng' },
+  { path: '/home/student', icon: <TeamOutlined />, title: 'Quản trị sinh viên' },
+  { path: '/home/statistics', icon: <FileExcelOutlined />, title: 'Thống Kê' },
+  { path: '/home/admin', icon: <UserOutlined />, title: 'Admin' },
 ];
 
 const { Sider } = Layout;

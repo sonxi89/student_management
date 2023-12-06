@@ -30,7 +30,7 @@ function DefaultLayout() {
             <div
               style={{
                 padding: 40,
-                minHeight: 600,
+                minHeight: 500,
                 background: colorBgContainer,
                 boxShadow: '0 0 20px 3px rgba(150,190,238,.15)',
               }}
