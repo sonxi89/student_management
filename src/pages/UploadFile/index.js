@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { UploadOutlined } from '@ant-design/icons';
 import { Button, message, Upload } from 'antd';
 import axios from 'axios';
+import aixosClient from '../../api/aixosClient';
+
 const { Dragger } = Upload;
 
 const UploadFile = () => {
@@ -17,8 +19,8 @@ const UploadFile = () => {
     setUploading(true);
 
     // You can use any AJAX library you like
-    axios
-      .post('http://localhost:8080/upload', formData, {
+    aixosClient
+      .post('/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

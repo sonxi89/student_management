@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Tag, Button, Space, Tooltip, Modal, message, Drawer, Spin } from 'antd';
+import { Table, Tag, Button, Space, Tooltip, Modal, message, Drawer } from 'antd';
 import userApi from '../../api/userApi';
 import StudentForm from '../../forms/StudentForm';
 import InfoStudent from '../../components/InfoStudent';
 import { ExclamationCircleFilled, RedoOutlined, EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import axios from 'axios';
+import aixosClient from '../../api/aixosClient';
+
 const { confirm } = Modal;
-const baseURL = 'http://localhost:8080/student/';
+// const baseURL = 'http://localhost:8080/student/';
 
 const ListStudent = () => {
   const [dataStudents, setDataStudents] = useState([]);
@@ -22,9 +24,8 @@ const ListStudent = () => {
   }, [isDeleted, openFormEdit]);
 
   const deleteStudent = async (itemId) => {
-    const url = baseURL + itemId + '/delete';
     try {
-      const response = await axios.delete(url);
+      const response = await aixosClient.delete('/student/' + itemId + '/delete');
       message.success(response.data);
       setIsDeleted(!isDeleted);
     } catch (error) {
@@ -73,13 +74,17 @@ const ListStudent = () => {
   const showStudentDetail = (data, action) => {
     setSelectedStudent(data);
 
-    if (action === 'view') {
+    if (action == 'view') {
       setOpenInfoStudent(true);
       setOpenFormEdit(false);
-    } else if (action === 'edit') {
+    } else if (action == 'edit') {
       setOpenFormEdit(true);
       setOpenInfoStudent(false);
     }
+  };
+
+  const handleReload = () => {
+    window.location.reload();
   };
 
   const columns = [
@@ -140,7 +145,14 @@ const ListStudent = () => {
       >
         <h2>Danh sách sinh viên</h2>
         <div>
-          <Button icon={<RedoOutlined />}>Làm mới</Button>
+          <Button
+            onClick={() => {
+              handleReload();
+            }}
+            icon={<RedoOutlined />}
+          >
+            Làm mới
+          </Button>
         </div>
       </div>
       <Table

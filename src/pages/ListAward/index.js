@@ -37,7 +37,7 @@ const ListAward = () => {
     setParamsExport(values);
   };
 
-  let handleExport = async () => {
+  const handleExport = async () => {
     try {
       const res = await userApi.getAward(paramsExport);
       if (res) {
@@ -49,6 +49,10 @@ const ListAward = () => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handleReload = () => {
+    window.location.reload();
   };
 
   const columns = [
@@ -108,7 +112,14 @@ const ListAward = () => {
       >
         <h2>Danh sách khen thưởng</h2>
         <div>
-          <Button icon={<RedoOutlined />}>Làm mới</Button>
+          <Button
+            onClick={() => {
+              handleReload();
+            }}
+            icon={<RedoOutlined />}
+          >
+            Làm mới
+          </Button>
           <Button
             style={{ marginLeft: '10px', backgroundColor: '#12bb7b' }}
             type="primary"

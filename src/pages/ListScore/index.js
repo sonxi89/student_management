@@ -2,11 +2,11 @@ import { DeleteOutlined, RedoOutlined, EditOutlined, ExclamationCircleFilled, Ey
 import { Button, Modal, Space, Table, Tooltip, message, Drawer } from 'antd';
 import DetailScore from '../../components/DetailScore';
 import ScoreForm from '../../forms/ScoreForm/index,';
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import userApi from '../../api/userApi';
+import aixosClient from '../../api/aixosClient';
 
-const baseURL = 'http://localhost:8080/student/';
+// const baseURL = 'http://localhost:8080/student/';
 const { confirm } = Modal;
 
 const ListScore = () => {
@@ -37,9 +37,9 @@ const ListScore = () => {
   };
 
   const deleteScore = async (itemId) => {
-    const url = baseURL + 'delete-score/' + itemId;
+    // const url = baseURL + 'delete-score/' + itemId;
     try {
-      const response = await axios.delete(url);
+      const response = await aixosClient.delete('/student/delete-score/' + itemId);
       message.success(response.data);
       setIsDeleted(!isDeleted);
     } catch (error) {
@@ -82,6 +82,10 @@ const ListScore = () => {
       setOpenFormEdit(true);
       setOpenDetailScore(false);
     }
+  };
+
+  const handleReload = () => {
+    window.location.reload();
   };
 
   const columns = [
@@ -150,7 +154,14 @@ const ListScore = () => {
       >
         <h2>Danh sách điểm</h2>
         <div>
-          <Button icon={<RedoOutlined />}>Làm mới</Button>
+          <Button
+            onClick={() => {
+              handleReload();
+            }}
+            icon={<RedoOutlined />}
+          >
+            Làm mới
+          </Button>
         </div>
       </div>
       <Table

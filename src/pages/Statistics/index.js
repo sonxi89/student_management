@@ -8,21 +8,20 @@ const { Option } = Select;
 
 function Statistics() {
   const [data, setData] = useState();
-  const [loading, setLoading] = useState(false);
   const [params, setParams] = useState({});
+  const [isActive, setIsActive] = useState(true);
 
   useEffect(() => {
     fetchRecords(params);
   }, [params]);
 
   const fetchRecords = (params) => {
-    setLoading(true);
     userApi
       .getStatistics(params)
       .then((res) => {
         setData(res);
+        setIsActive(false);
         console.log(res);
-        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -32,7 +31,7 @@ function Statistics() {
   const handleExport = () => {
     const excel = new Excel();
     excel
-      .addSheet('test')
+      .addSheet('Thống kê')
       .addColumns(columns)
       .addDataSource(data, {
         str2Percent: true,
@@ -43,6 +42,10 @@ function Statistics() {
   const onFinish = (values) => {
     console.log(values);
     setParams(values);
+  };
+
+  const handleReload = () => {
+    window.location.reload();
   };
 
   const columns = [
@@ -287,7 +290,14 @@ function Statistics() {
       >
         <h2>Thống kê</h2>
         <div>
-          <Button icon={<RedoOutlined />}>Làm mới</Button>
+          <Button
+            onClick={() => {
+              handleReload();
+            }}
+            icon={<RedoOutlined />}
+          >
+            Làm mới
+          </Button>
         </div>
       </div>
       <br />
@@ -320,7 +330,6 @@ function Statistics() {
 
       <Table
         columns={columns}
-        loading={loading}
         dataSource={data}
         bordered
         scroll={{
@@ -329,8 +338,9 @@ function Statistics() {
         }}
       />
       <Button
-        style={{ marginLeft: '10px', backgroundColor: '#12bb7b' }}
+        style={{ marginLeft: '10px' }}
         type="primary"
+        disabled={isActive}
         icon={<DownloadOutlined />}
         onClick={() => {
           handleExport();

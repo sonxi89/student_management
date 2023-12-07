@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Upload, Button, message } from 'antd';
-import axios from 'axios';
+
+import aixosClient from '../../api/aixosClient';
 
 const { Dragger } = Upload;
 
@@ -26,8 +27,8 @@ export default function UploadFile() {
       });
       setUploading(true);
 
-      axios
-        .post('http://localhost:8080/student/upload', formData, {
+      aixosClient
+        .post('/student/upload', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
