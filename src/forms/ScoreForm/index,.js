@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { Button, Form, Input, DatePicker, Select, message } from 'antd';
-import dayjs from 'dayjs';
 import userApi from '../../api/userApi';
 
 const { Option } = Select;
 
-function ScoreForm({ data, onClose }) {
+function ScoreForm({ data, onClose, updateDataAfterSave }) {
   const [dataStudent, setDataStudents] = useState(data);
   console.log(dataStudent);
 
@@ -14,6 +13,7 @@ function ScoreForm({ data, onClose }) {
       .updateScore(dataStudent.id, fieldsValue)
       .then((res) => {
         message.success(res.message);
+        updateDataAfterSave();
         onClose();
       })
       .catch((err) => {
@@ -59,7 +59,7 @@ function ScoreForm({ data, onClose }) {
         disabled
         label="Họ tên"
         name="student_name"
-        initialValue={dataStudent['Student.student_name']}
+        initialValue={dataStudent.student_name}
         rules={[
           {
             required: true,
@@ -72,7 +72,7 @@ function ScoreForm({ data, onClose }) {
       <Form.Item
         label="Lớp"
         name="class_name"
-        initialValue={dataStudent['Student.class_name']}
+        initialValue={dataStudent.class_name}
         rules={[
           {
             required: true,
@@ -98,7 +98,7 @@ function ScoreForm({ data, onClose }) {
       <Form.Item
         label="Ngành"
         name="majors_name"
-        initialValue={dataStudent['Student.majors_name']}
+        initialValue={dataStudent.majors_name}
         rules={[
           {
             required: true,
@@ -111,7 +111,7 @@ function ScoreForm({ data, onClose }) {
       <Form.Item
         label="Khóa"
         name="faculty_name"
-        initialValue={dataStudent['Student.faculty_name']}
+        initialValue={dataStudent.faculty_name}
         rules={[
           {
             required: true,

@@ -25,3 +25,7 @@
   .ant-menu-inline-collapsed >.ant-menu-item {
     padding-inline: calc(50% - 8px);
   }
+
+  .ant-layout-sider-children {
+    position: fixed;
+  }

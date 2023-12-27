@@ -1,42 +1,38 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Tag, Button, Space, Tooltip, Modal, message, Drawer } from 'antd';
+import { Table, Tag, Button, Space, Tooltip, Modal, message, Drawer, Input, Form } from 'antd';
 import userApi from '../../api/userApi';
 import StudentForm from '../../forms/StudentForm';
 import InfoStudent from '../../components/InfoStudent';
-import { ExclamationCircleFilled, RedoOutlined, EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import axios from 'axios';
-import aixosClient from '../../api/aixosClient';
+import {
+  ExclamationCircleFilled,
+  RedoOutlined,
+  EyeOutlined,
+  EditOutlined,
+  DeleteOutlined,
+  SearchOutlined,
+} from '@ant-design/icons';
+import axiosClient from '../../api/aixosClient';
 
 const { confirm } = Modal;
 // const baseURL = 'http://localhost:8080/student/';
 
 const ListStudent = () => {
   const [dataStudents, setDataStudents] = useState([]);
-  const [isDeleted, setIsDeleted] = useState(false);
   const [openFormEdit, setOpenFormEdit] = useState(false);
   const [openInfoStudent, setOpenInfoStudent] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [params, setParams] = useState({ page: 1 });
 
   useEffect(() => {
-    fetchRecords(1);
-  }, [isDeleted, openFormEdit]);
+    fetchRecords(params);
+  }, [params]);
 
-  const deleteStudent = async (itemId) => {
-    try {
-      const response = await aixosClient.delete('/student/' + itemId + '/delete');
-      message.success(response.data);
-      setIsDeleted(!isDeleted);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const fetchRecords = (page) => {
+  const fetchRecords = (params) => {
     setLoading(true);
     userApi
-      .getStudent(page)
+      .getStudent(params)
       .then((res) => {
         setDataStudents(res.data);
         setTotalPages(res.pagination.total);
@@ -47,7 +43,28 @@ const ListStudent = () => {
       });
   };
 
+  const deleteStudent = async (itemId) => {
+    try {
+      await axiosClient.delete('/student/' + itemId + '/delete');
+      fetchRecords(params);
+      message.success('Xóa thành công!');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onFinish = (values) => {
+    const newParams = { ...values, page: 1 };
+    setParams(newParams);
+    console.log(values);
+  };
+
+  const updateDataAfterSave = () => {
+    fetchRecords(params);
+  };
+
   const showDeleteConfirm = (itemId) => {
+    console.log(itemId);
     confirm({
       title: 'Bạn có muốn xóa sinh viên này?',
       icon: <ExclamationCircleFilled />,
@@ -155,6 +172,26 @@ const ListStudent = () => {
           </Button>
         </div>
       </div>
+      <Form
+        name="validate_other"
+        onFinish={onFinish}
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
+        <Form.Item style={{ marginRight: '20px' }} name="search">
+          <Input style={{ width: '450px' }} />
+        </Form.Item>
+
+        <Form.Item>
+          <Space>
+            <Button type="primary" icon={<SearchOutlined />} htmlType="submit">
+              Tìm kiếm
+            </Button>
+          </Space>
+        </Form.Item>
+      </Form>
       <Table
         columns={columns}
         loading={loading}
@@ -163,8 +200,9 @@ const ListStudent = () => {
         pagination={{
           pageSize: 10,
           total: totalPages,
+          current: params.page,
           onChange: (page) => {
-            fetchRecords(page);
+            setParams({ ...params, page });
           },
         }}
       />
@@ -177,7 +215,9 @@ const ListStudent = () => {
         {openInfoStudent && (
           <InfoStudent data={selectedStudent} showFormEdit={showStudentDetail} showDeleteConfirm={showDeleteConfirm} />
         )}
-        {openFormEdit && <StudentForm data={selectedStudent} onClose={onClose} />}
+        {openFormEdit && (
+          <StudentForm data={selectedStudent} updateDataAfterSave={updateDataAfterSave} onClose={onClose} />
+        )}
       </Drawer>
     </>
   );

@@ -5,13 +5,13 @@ const userApi = {
     const url = 'student/get-all';
     return axiosClient.get(url, { params: paramId });
   },
-  getScore(page) {
-    const url = `student/scores?page=${page}`;
-    return axiosClient.get(url);
+  getScore(params) {
+    const url = 'student/scores';
+    return axiosClient.get(url, { params: params });
   },
-  getStudent(page) {
-    const url = `student/students?page=${page}`;
-    return axiosClient.get(url);
+  getStudent(params) {
+    const url = `student/students`;
+    return axiosClient.get(url, { params: params });
   },
   getAward(params) {
     const url = 'student/awards';
@@ -32,6 +32,10 @@ const userApi = {
   getStatistics(params) {
     const url = 'student/statistics';
     return axiosClient.get(url, { params: params });
+  },
+  getDataChart() {
+    const url = 'student/data-chart';
+    return axiosClient.get(url);
   },
 };
 

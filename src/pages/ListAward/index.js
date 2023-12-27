@@ -148,8 +148,6 @@ const ListAward = () => {
             <Option value="2021-2022">2021-2022</Option>
             <Option value="2022-2023">2022-2023</Option>
             <Option value="2023-2024">2023-2024</Option>
-            <Option value="2024-2026">2024-2026</Option>
-            <Option value="2026-2027">2026-2027</Option>
           </Select>
         </Form.Item>
 
@@ -175,7 +173,7 @@ const ListAward = () => {
 
         <Form.Item style={{ marginRight: '20px' }} name="faculty" label="Khoa">
           <Select defaultValue="">
-            <Option value="">-- Khoa --</Option>
+            <Option value="">-- Khoa, Viện --</Option>
             <Option value="Khoa Công nghệ thông tin">Công nghệ thông tin</Option>
             <Option value="Khoa Điện tử viễn thông">Điện tử viễn thông</Option>
           </Select>

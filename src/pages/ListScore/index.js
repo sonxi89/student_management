@@ -1,5 +1,12 @@
-import { DeleteOutlined, RedoOutlined, EditOutlined, ExclamationCircleFilled, EyeOutlined } from '@ant-design/icons';
-import { Button, Modal, Space, Table, Tooltip, message, Drawer } from 'antd';
+import {
+  DeleteOutlined,
+  RedoOutlined,
+  EditOutlined,
+  ExclamationCircleFilled,
+  EyeOutlined,
+  SearchOutlined,
+} from '@ant-design/icons';
+import { Button, Modal, Space, Table, Tooltip, message, Drawer, Form, Input } from 'antd';
 import DetailScore from '../../components/DetailScore';
 import ScoreForm from '../../forms/ScoreForm/index,';
 import React, { useEffect, useState } from 'react';
@@ -10,22 +17,22 @@ import aixosClient from '../../api/aixosClient';
 const { confirm } = Modal;
 
 const ListScore = () => {
-  const [isDeleted, setIsDeleted] = useState(false);
   const [dataUser, setDataUser] = useState([]);
   const [openFormEdit, setOpenFormEdit] = useState(false);
   const [openDetailScore, setOpenDetailScore] = useState(false);
   const [selectedScore, setSelectedScore] = useState(null);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [params, setParams] = useState({ page: 1 });
 
   useEffect(() => {
-    fetchRecords(1);
-  }, [isDeleted, openFormEdit]);
+    fetchRecords(params);
+  }, [params]);
 
-  const fetchRecords = (page) => {
+  const fetchRecords = (params) => {
     setLoading(true);
     userApi
-      .getScore(page)
+      .getScore(params)
       .then((res) => {
         setDataUser(res.data);
         setTotalPages(res.pagination.total);
@@ -39,9 +46,9 @@ const ListScore = () => {
   const deleteScore = async (itemId) => {
     // const url = baseURL + 'delete-score/' + itemId;
     try {
-      const response = await aixosClient.delete('/student/delete-score/' + itemId);
-      message.success(response.data);
-      setIsDeleted(!isDeleted);
+      await aixosClient.delete('/student/delete-score/' + itemId);
+      fetchRecords(params);
+      message.success('Xóa thành công!');
     } catch (error) {
       console.log(error);
     }
@@ -67,9 +74,19 @@ const ListScore = () => {
     });
   };
 
+  const updateDataAfterSave = () => {
+    fetchRecords(params);
+  };
+
   const onClose = () => {
     setOpenFormEdit(false);
     setOpenDetailScore(false);
+  };
+
+  const onFinish = (values) => {
+    const newParams = { ...values, page: 1 };
+    setParams(newParams);
+    console.log(values);
   };
 
   const showScoreDetail = (data, action) => {
@@ -95,23 +112,23 @@ const ListScore = () => {
     },
     {
       title: 'Họ Tên',
-      dataIndex: 'Student.student_name',
+      dataIndex: 'student_name',
     },
     {
       title: 'Ngày sinh',
-      dataIndex: 'Student.student_dob',
+      dataIndex: 'student_dob',
     },
     {
       title: 'Lớp',
-      dataIndex: 'Student.class_name',
+      dataIndex: 'class_name',
     },
     {
       title: 'Ngành',
-      dataIndex: 'Student.majors_name',
+      dataIndex: 'majors_name',
     },
     {
       title: 'Khoa',
-      dataIndex: 'Student.faculty_name',
+      dataIndex: 'faculty_name',
     },
     {
       title: 'Năm học',
@@ -164,6 +181,26 @@ const ListScore = () => {
           </Button>
         </div>
       </div>
+      <Form
+        name="validate_other"
+        onFinish={onFinish}
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
+        <Form.Item style={{ marginRight: '20px' }} name="search">
+          <Input style={{ width: '450px' }} />
+        </Form.Item>
+
+        <Form.Item>
+          <Space>
+            <Button type="primary" icon={<SearchOutlined />} htmlType="submit">
+              Tìm kiếm
+            </Button>
+          </Space>
+        </Form.Item>
+      </Form>
       <Table
         columns={columns}
         loading={loading}
@@ -172,8 +209,9 @@ const ListScore = () => {
         pagination={{
           pageSize: 10,
           total: totalPages,
+          current: params.page,
           onChange: (page) => {
-            fetchRecords(page);
+            setParams({ ...params, page });
           },
         }}
       />
@@ -187,7 +225,7 @@ const ListScore = () => {
         {openDetailScore && (
           <DetailScore data={selectedScore} showFormEdit={showScoreDetail} showDeleteConfirm={showDeleteConfirm} />
         )}
-        {openFormEdit && <ScoreForm data={selectedScore} onClose={onClose} />}
+        {openFormEdit && <ScoreForm data={selectedScore} updateDataAfterSave={updateDataAfterSave} onClose={onClose} />}
       </Drawer>
     </>
   );

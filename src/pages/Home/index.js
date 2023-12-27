@@ -5,6 +5,7 @@ import userApi from '../../api/userApi';
 
 const Home = () => {
   const [dataReport, setDataReport] = useState();
+  const [dataChart, setDataChart] = useState();
   const [dataReportDiagram, setDataReportDiagram] = useState();
 
   useEffect(() => {
@@ -16,8 +17,19 @@ const Home = () => {
           { name: 'SVG', value: res.svg },
           { name: 'SVXS', value: res.svxs },
           { name: 'SVCĐG', value: res.svcdg },
-          { name: 'SVXS & SVCĐG', value: res.svxsvcdg },
         ]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  useEffect(() => {
+    userApi
+      .getDataChart()
+      .then((res) => {
+        console.log(res);
+        setDataChart(res);
       })
       .catch((err) => {
         console.log(err);
@@ -65,7 +77,7 @@ const Home = () => {
           icon="/img/education_4.png"
         />
       </div>
-      <Chart data1={dataReportDiagram} />
+      <Chart data1={dataReportDiagram} data2={dataChart} />
     </>
   );
 };

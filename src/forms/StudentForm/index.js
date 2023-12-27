@@ -5,9 +5,7 @@ import userApi from '../../api/userApi';
 
 const { Option } = Select;
 
-function StudentForm({ data, onClose }) {
-  const [dataStudent, setDataStudents] = useState(data);
-
+function StudentForm({ data, onClose, updateDataAfterSave }) {
   const onFinish = (fieldsValue) => {
     const values = {
       ...fieldsValue,
@@ -17,9 +15,10 @@ function StudentForm({ data, onClose }) {
     console.log('Received values of form: ', values);
 
     userApi
-      .updateStudent(dataStudent.id, values)
+      .updateStudent(data.id, values)
       .then((res) => {
         message.success(res.message);
+        updateDataAfterSave();
         onClose();
       })
       .catch((err) => {
@@ -50,7 +49,7 @@ function StudentForm({ data, onClose }) {
       <Form.Item
         label="Mã sinh viên"
         name="student_code"
-        initialValue={dataStudent.student_code}
+        initialValue={data.student_code}
         rules={[
           {
             required: true,
@@ -64,7 +63,7 @@ function StudentForm({ data, onClose }) {
       <Form.Item
         label="Họ tên"
         name="student_name"
-        initialValue={dataStudent.student_name}
+        initialValue={data.student_name}
         rules={[
           {
             required: true,
@@ -85,7 +84,7 @@ function StudentForm({ data, onClose }) {
             message: 'Please select time!',
           },
         ]}
-        initialValue={dayjs(dataStudent.student_dob)}
+        initialValue={dayjs(data.student_dob)}
       >
         <DatePicker
           style={{
@@ -96,7 +95,7 @@ function StudentForm({ data, onClose }) {
       <Form.Item
         label="Lớp"
         name="class_name"
-        initialValue={dataStudent.class_name}
+        initialValue={data.class_name}
         rules={[
           {
             required: true,
@@ -109,7 +108,7 @@ function StudentForm({ data, onClose }) {
       <Form.Item
         label="Ngành"
         name="majors_name"
-        initialValue={dataStudent.majors_name}
+        initialValue={data.majors_name}
         rules={[
           {
             required: true,
@@ -122,7 +121,7 @@ function StudentForm({ data, onClose }) {
       <Form.Item
         label="Khoa"
         name="faculty_name"
-        initialValue={dataStudent.faculty_name}
+        initialValue={data.faculty_name}
         rules={[
           {
             required: true,
@@ -141,7 +140,7 @@ function StudentForm({ data, onClose }) {
             message: 'Please select your country!',
           },
         ]}
-        initialValue={dataStudent.student_position}
+        initialValue={data.student_position}
       >
         <Select placeholder="Please select a country">
           <Option value="1">Cán bộ lớp</Option>

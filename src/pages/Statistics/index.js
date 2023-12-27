@@ -314,8 +314,6 @@ function Statistics() {
             <Option value="2021-2022">2021-2022</Option>
             <Option value="2022-2023">2022-2023</Option>
             <Option value="2023-2024">2023-2024</Option>
-            <Option value="2024-2026">2024-2026</Option>
-            <Option value="2026-2027">2026-2027</Option>
           </Select>
         </Form.Item>
 

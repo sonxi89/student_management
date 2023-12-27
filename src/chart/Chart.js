@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import axios from 'axios';
 import {
   Bar,
   BarChart,
@@ -13,10 +12,10 @@ import {
   XAxis,
   YAxis,
   Sector,
-  ResponsiveContainer,
 } from 'recharts';
 
-const COLORS = ['#00C49F', '#e17b7b', '#FFBB28', '#FF8042', '#4ab7e3'];
+// const COLORS = ['#00C49F', '#e17b7b', '#FFBB28', '#FF8042', '#4ab7e3'];
+const COLORS = ['#00C49F', '#e17b7b', '#FFBB28'];
 
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
@@ -77,30 +76,6 @@ const renderActiveShape = (props) => {
   );
 };
 
-const data2 = [
-  {
-    name: '2021-2022',
-    SVG: 40,
-    SVXS: 15,
-    SVCĐG: 5,
-    'SVXS & CĐG': 2,
-  },
-  {
-    name: '2022-2023',
-    SVG: 38,
-    SVXS: 21,
-    SVCĐG: 4,
-    'SVXS & CĐG': 3,
-  },
-  {
-    name: '2023-2024',
-    SVG: 59,
-    SVXS: 30,
-    SVCĐG: 5,
-    'SVXS & CĐG': 1,
-  },
-];
-
 export default class Chart extends PureComponent {
   state = {
     activeIndex: 0,
@@ -111,11 +86,15 @@ export default class Chart extends PureComponent {
       activeIndex: index,
     });
   };
+
   render() {
+    const isData2Valid = this.props.data2 && this.props.data2.length > 0;
+    const isData2ElementValid = isData2Valid && typeof this.props.data2[0] !== 'undefined';
+
     return (
       <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '30px' }}>
         <div style={{ border: '2px solid #f5f5f5' }}>
-          <PieChart width={400} height={400}>
+          <PieChart width={500} height={400}>
             <Pie
               activeIndex={this.state.activeIndex}
               activeShape={renderActiveShape}
@@ -141,7 +120,7 @@ export default class Chart extends PureComponent {
           <BarChart
             width={600}
             height={400}
-            data={data2}
+            data={isData2ElementValid && this.props.data2[0].SVG !== 0 ? this.props.data2 : []}
             margin={{
               top: 5,
               right: 30,
@@ -157,7 +136,6 @@ export default class Chart extends PureComponent {
             <Bar dataKey="SVG" fill="#00C49F" activeBar={<Rectangle fill="pink" stroke="green" />} />
             <Bar dataKey="SVXS" fill="#e17b7b" activeBar={<Rectangle fill="pink" stroke="blue" />} />
             <Bar dataKey="SVCĐG" fill="#FFBB28" activeBar={<Rectangle fill="gold" stroke="purple" />} />
-            <Bar dataKey="SVXS & CĐG" fill="#FF8042" activeBar={<Rectangle fill="gold" stroke="purple" />} />
           </BarChart>
         </div>
       </div>
